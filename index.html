@@ -238,7 +238,7 @@
              ▸ ONE-TIME SETUP: after the site is live, submit this form once yourself. FormSubmit
                will email achams123@gmail.com a confirmation link — click it once and the form is
                active forever. (See README → "Make the contact form work".) -->
-        <form id="contactForm" class="contact-form" action="https://formsubmit.co/ajax/achams123@gmail.com" method="POST">
+        <form id="contactForm" class="contact-form" action="https://formsubmit.co/achams123@gmail.com" method="POST">
           <div class="form-row">
             <div class="field">
               <label for="cf-name">Name</label>
@@ -257,6 +257,7 @@
           <input type="hidden" name="_subject" value="New inquiry from your website" />
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value="https://nchams.github.io/thanks.html" />
           <!-- honeypot: bots fill this, humans don't -->
           <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <button type="submit" class="btn btn-primary" id="cf-submit">Send message</button>
@@ -298,38 +299,13 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Contact form — submit via FormSubmit AJAX so the visitor stays on the page
+    // Contact form — native POST to FormSubmit (no CORS issues). Disable the button
+    // on submit so it can't be double-sent; the page then redirects to thanks.html.
     const form = document.getElementById('contactForm');
-    const status = document.getElementById('cf-status');
     const submitBtn = document.getElementById('cf-submit');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      status.className = 'form-status';
-      status.textContent = '';
+    form.addEventListener('submit', () => {
       submitBtn.disabled = true;
-      const original = submitBtn.textContent;
       submitBtn.textContent = 'Sending…';
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: new FormData(form)
-        });
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && (data.success === 'true' || data.success === true)) {
-          form.reset();
-          status.className = 'form-status ok';
-          status.textContent = '✓ Thanks! Your message has been sent — I\'ll get back to you shortly.';
-        } else {
-          throw new Error(data.message || 'Request failed');
-        }
-      } catch (err) {
-        status.className = 'form-status err';
-        status.innerHTML = 'Something went wrong. Please email me directly at <a href="mailto:achams123@gmail.com">achams123@gmail.com</a>.';
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = original;
-      }
     });
   </script>
 </body>

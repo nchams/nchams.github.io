@@ -86,11 +86,12 @@ The contact form sends messages straight to **achams123@gmail.com** using
    the link. That's it: every submission from then on lands in your inbox.
 
 Notes:
-- The form is wired to AJAX, so visitors see a "✓ Thanks!" message without leaving the page.
-- If it ever fails, the form automatically tells the visitor to email you directly.
+- The form uses a standard POST (not AJAX) to avoid browser CORS blocking. After sending,
+  visitors land on `thanks.html` — a clean confirmation page — then can return home.
 - To change the destination address, edit the email in the form's `action="..."` URL in
   `index.html` (and re-confirm via the new activation email).
-- Testing locally from `file://` may be blocked by the browser — confirm it on the live URL.
+- If you ever use a custom domain, update the `_next` hidden field URL in `index.html`
+  (and the `action` URL stays as your email).
 
 ### 4. Tweak text, colors, or your name
 - **Name / headline / bio:** edit directly in `index.html` (it's all plain text).
