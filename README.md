@@ -104,7 +104,22 @@ Notes:
 
 ### 5. Use a custom domain (optional)
 Buy a domain, add a file named `CNAME` containing just your domain (e.g. `nasserchams.com`),
-and point your DNS to GitHub Pages per their docs.
+and point your DNS to GitHub Pages per their docs. If you switch domains, also update the
+URLs in `sitemap.xml`, `robots.txt`, and the `canonical`/`og:url` tags in `index.html`.
+
+### 6. Get found on Google (Search Console)
+The site already ships with `sitemap.xml`, `robots.txt`, SEO meta tags, and Person
+structured data. To get indexed:
+
+1. Go to **https://search.google.com/search-console**, sign in, and add a property of type
+   **URL prefix**: `https://nchams.github.io/`.
+2. Choose the **HTML tag** verification method. Copy the token from the meta tag it shows.
+3. In `index.html`, uncomment the `google-site-verification` line and paste your token, then
+   commit & push. Back in Search Console, click **Verify**.
+4. In Search Console → **Sitemaps**, submit `sitemap.xml`. Then use **URL Inspection** →
+   *Request indexing* on the homepage to speed things up.
+
+Indexing typically takes a few days to a couple of weeks.
 
 ---
 
