@@ -78,20 +78,22 @@ line in `styles.css` under `.logo-tile` if you'd rather they always show in colo
 
 ### 3. Make the contact form work  *(one-time, ~30 seconds)*
 The contact form sends messages straight to **achams123@gmail.com** using
-[FormSubmit](https://formsubmit.co) — no account, no API key, no backend. To activate it:
+[Web3Forms](https://web3forms.com) — free, reliable, CORS-friendly, no account needed. To
+activate it:
 
-1. Deploy the site (see above) so it's live at your GitHub Pages URL.
-2. Open the live site, fill in the contact form, and click **Send message** once yourself.
-3. FormSubmit emails **achams123@gmail.com** a confirmation link — open that email and click
-   the link. That's it: every submission from then on lands in your inbox.
+1. Go to **https://web3forms.com**, enter **achams123@gmail.com**, and submit.
+2. Web3Forms emails you an **access key** (a long code). Copy it.
+3. In `index.html`, find the line
+   `<input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />`
+   and replace `YOUR_WEB3FORMS_ACCESS_KEY` with your key. Commit & push.
+
+That's it — submissions arrive in your inbox immediately, with no per-message confirmation.
 
 Notes:
-- The form uses a standard POST (not AJAX) to avoid browser CORS blocking. After sending,
-  visitors land on `thanks.html` — a clean confirmation page — then can return home.
-- To change the destination address, edit the email in the form's `action="..."` URL in
-  `index.html` (and re-confirm via the new activation email).
-- If you ever use a custom domain, update the `_next` hidden field URL in `index.html`
-  (and the `action` URL stays as your email).
+- The form submits via AJAX, so visitors see a green "✓ Thanks!" message without leaving
+  the page. If anything fails, it tells the visitor to email you directly.
+- The free tier covers 250 submissions/month — plenty for a personal site.
+- To change the destination, manage it from your Web3Forms dashboard (the key controls it).
 
 ### 4. Tweak text, colors, or your name
 - **Name / headline / bio:** edit directly in `index.html` (it's all plain text).

@@ -234,11 +234,10 @@
         <h2 style="margin-top:10px;">Have a data problem? Let's talk.</h2>
         <p>Tell me what you're working on and I'll get back to you quickly. Send a message below, or reach me directly.</p>
 
-        <!-- Contact form: delivers to achams123@gmail.com via FormSubmit (no backend needed).
-             ▸ ONE-TIME SETUP: after the site is live, submit this form once yourself. FormSubmit
-               will email achams123@gmail.com a confirmation link — click it once and the form is
-               active forever. (See README → "Make the contact form work".) -->
-        <form id="contactForm" class="contact-form" action="https://formsubmit.co/achams123@gmail.com" method="POST">
+        <!-- Contact form: delivers to achams123@gmail.com via Web3Forms (free, reliable, CORS-safe).
+             ▸ SETUP: get a free access key at https://web3forms.com (enter achams123@gmail.com,
+               copy the key it emails you) and paste it into the access_key field below. -->
+        <form id="contactForm" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
           <div class="form-row">
             <div class="field">
               <label for="cf-name">Name</label>
@@ -253,13 +252,12 @@
             <label for="cf-message">Message</label>
             <textarea id="cf-message" name="message" placeholder="A few lines about your project, timeline, and goals…" required></textarea>
           </div>
-          <!-- FormSubmit options -->
-          <input type="hidden" name="_subject" value="New inquiry from your website" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_next" value="https://nchams.github.io/thanks.html" />
-          <!-- honeypot: bots fill this, humans don't -->
-          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <!-- Web3Forms config -->
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+          <input type="hidden" name="subject" value="New inquiry from your website" />
+          <input type="hidden" name="from_name" value="nchams.github.io contact form" />
+          <!-- honeypot: bots tick this, humans never see it -->
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <button type="submit" class="btn btn-primary" id="cf-submit">Send message</button>
           <p class="form-status" id="cf-status" role="status" aria-live="polite"></p>
         </form>
@@ -299,13 +297,38 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Contact form — native POST to FormSubmit (no CORS issues). Disable the button
-    // on submit so it can't be double-sent; the page then redirects to thanks.html.
+    // Contact form — submit via Web3Forms (CORS-enabled) so the visitor stays on the page.
     const form = document.getElementById('contactForm');
+    const status = document.getElementById('cf-status');
     const submitBtn = document.getElementById('cf-submit');
-    form.addEventListener('submit', () => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.className = 'form-status';
+      status.textContent = '';
+      const original = submitBtn.textContent;
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          form.reset();
+          status.className = 'form-status ok';
+          status.textContent = '✓ Thanks! Your message has been sent — I\'ll get back to you shortly.';
+        } else {
+          throw new Error(data.message || 'Request failed');
+        }
+      } catch (err) {
+        status.className = 'form-status err';
+        status.innerHTML = 'Something went wrong. Please email me directly at <a href="mailto:achams123@gmail.com">achams123@gmail.com</a>.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = original;
+      }
     });
   </script>
 </body>
