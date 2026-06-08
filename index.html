@@ -24,9 +24,9 @@
     <div class="container nav-inner">
       <a href="#top" class="brand">Nasser&nbsp;Chams<span class="dot">.</span></a>
       <nav class="nav-links" id="navLinks">
+        <a href="#work">Experience</a>
         <a href="#about">About</a>
         <a href="#services">What I Do</a>
-        <a href="#work">Experience</a>
         <a href="#testimonials">Testimonials</a>
         <a href="#contact" class="btn btn-primary">Get in touch</a>
       </nav>
@@ -60,6 +60,69 @@
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Python · SQL · ML · Dashboards</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Top-rated on Upwork</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Remote, worldwide</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WORKED WITH (rolling marquee) ===================== -->
+    <!--
+      A seamless left→right marquee. The logo set is duplicated (second copy is
+      aria-hidden) so the loop has no visible seam. Each tile links to the company.
+      Four tiles load the company's OFFICIAL logo from their own CDN, falling back to a
+      local wordmark in assets/logos/ if the remote URL ever fails. CTC and Originality.ai
+      only publish white-on-transparent logos (invisible on white), so they use a clean
+      dark wordmark — drop a dark/color file into assets/logos/ to replace either one.
+    -->
+    <section class="section section-soft section-work" id="work">
+      <div class="container">
+        <div class="section-head section-head-center reveal">
+          <span class="kicker">Experience</span>
+          <h2>Trusted by teams across industries.</h2>
+          <p>Organizations I've delivered data, analytics, and engineering work for — click any logo to visit them.</p>
+        </div>
+      </div>
+      <div class="marquee reveal" aria-label="Companies I have worked with">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <a class="logo-tile" href="https://altsportsdata.com" target="_blank" rel="noopener" title="Alt Sports Data — sports betting market data">
+              <img src="https://static.wixstatic.com/media/e93ac5_96a4d8a9a85640bc8b1dee74f92e96a4~mv2.png/v1/fill/w_240,h_120,al_c,q_85,enc_auto/ASD_Logo_Stack_BLACK.png" alt="Alt Sports Data" onerror="this.onerror=null;this.src='assets/logos/alt-sports-data.svg';" />
+            </a>
+            <a class="logo-tile" href="https://allezhealth.com" target="_blank" rel="noopener" title="Allez Health — continuous metabolic sensing">
+              <img src="https://allezhealth.com/_next/static/media/logo.9eea5463.svg" alt="Allez Health" onerror="this.onerror=null;this.src='assets/logos/allez-health.svg';" />
+            </a>
+            <a class="logo-tile" href="https://www.mcmaster.ca" target="_blank" rel="noopener" title="McMaster University">
+              <img src="https://brand.mcmaster.ca/app/uploads/2024/03/McMaster-logo.png" alt="McMaster University" onerror="this.onerror=null;this.src='assets/logos/mcmaster-university.svg';" />
+            </a>
+            <a class="logo-tile" href="https://commonthreadco.com" target="_blank" rel="noopener" title="Common Thread Collective — ecommerce growth">
+              <img src="assets/logos/common-thread-collective.svg" alt="Common Thread Collective" />
+            </a>
+            <a class="logo-tile" href="https://originality.ai" target="_blank" rel="noopener" title="Originality.ai — AI content detection">
+              <img src="assets/logos/originality-ai.svg" alt="Originality.ai" />
+            </a>
+            <a class="logo-tile" href="https://www.wharton.upenn.edu" target="_blank" rel="noopener" title="The Wharton School, University of Pennsylvania">
+              <img src="https://www.wharton.upenn.edu/wp-content/plugins/martech-chupacabra/includes/images/Wharton-Logo-RGB.png" alt="The Wharton School" onerror="this.onerror=null;this.src='assets/logos/wharton.svg';" />
+            </a>
+          </div>
+          <div class="marquee-group" aria-hidden="true">
+            <a class="logo-tile" href="https://altsportsdata.com" target="_blank" rel="noopener" tabindex="-1">
+              <img src="https://static.wixstatic.com/media/e93ac5_96a4d8a9a85640bc8b1dee74f92e96a4~mv2.png/v1/fill/w_240,h_120,al_c,q_85,enc_auto/ASD_Logo_Stack_BLACK.png" alt="" onerror="this.onerror=null;this.src='assets/logos/alt-sports-data.svg';" />
+            </a>
+            <a class="logo-tile" href="https://allezhealth.com" target="_blank" rel="noopener" tabindex="-1">
+              <img src="https://allezhealth.com/_next/static/media/logo.9eea5463.svg" alt="" onerror="this.onerror=null;this.src='assets/logos/allez-health.svg';" />
+            </a>
+            <a class="logo-tile" href="https://www.mcmaster.ca" target="_blank" rel="noopener" tabindex="-1">
+              <img src="https://brand.mcmaster.ca/app/uploads/2024/03/McMaster-logo.png" alt="" onerror="this.onerror=null;this.src='assets/logos/mcmaster-university.svg';" />
+            </a>
+            <a class="logo-tile" href="https://commonthreadco.com" target="_blank" rel="noopener" tabindex="-1">
+              <img src="assets/logos/common-thread-collective.svg" alt="" />
+            </a>
+            <a class="logo-tile" href="https://originality.ai" target="_blank" rel="noopener" tabindex="-1">
+              <img src="assets/logos/originality-ai.svg" alt="" />
+            </a>
+            <a class="logo-tile" href="https://www.wharton.upenn.edu" target="_blank" rel="noopener" tabindex="-1">
+              <img src="https://www.wharton.upenn.edu/wp-content/plugins/martech-chupacabra/includes/images/Wharton-Logo-RGB.png" alt="" onerror="this.onerror=null;this.src='assets/logos/wharton.svg';" />
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -134,55 +197,8 @@
       </div>
     </section>
 
-    <!-- ===================== WORKED WITH ===================== -->
-    <section class="section" id="work">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="kicker">Experience</span>
-          <h2>Trusted by teams across industries.</h2>
-          <p>Organizations I've delivered data, analytics, and engineering work for.</p>
-        </div>
-        <!--
-          Each tile loads the company's OFFICIAL logo from their own CDN. If a remote
-          URL ever changes or fails to load, onerror swaps in the local wordmark in
-          assets/logos/ so the wall never appears broken. CTC and Originality.ai only
-          publish white-on-transparent logos (invisible on white), so they intentionally
-          use the local dark wordmark — drop a dark/color version into the matching file
-          in assets/logos/ to replace it.
-        -->
-        <div class="logo-wall reveal">
-          <div class="logo-tile" title="Alt Sports Data — sports betting market data">
-            <img src="https://static.wixstatic.com/media/e93ac5_96a4d8a9a85640bc8b1dee74f92e96a4~mv2.png/v1/fill/w_240,h_120,al_c,q_85,enc_auto/ASD_Logo_Stack_BLACK.png"
-                 alt="Alt Sports Data" loading="lazy"
-                 onerror="this.onerror=null;this.src='assets/logos/alt-sports-data.svg';" />
-          </div>
-          <div class="logo-tile" title="Allez Health — continuous metabolic sensing">
-            <img src="https://allezhealth.com/_next/static/media/logo.9eea5463.svg"
-                 alt="Allez Health" loading="lazy"
-                 onerror="this.onerror=null;this.src='assets/logos/allez-health.svg';" />
-          </div>
-          <div class="logo-tile" title="McMaster University">
-            <img src="https://brand.mcmaster.ca/app/uploads/2024/03/McMaster-logo.png"
-                 alt="McMaster University" loading="lazy"
-                 onerror="this.onerror=null;this.src='assets/logos/mcmaster-university.svg';" />
-          </div>
-          <div class="logo-tile" title="Common Thread Collective — ecommerce growth">
-            <img src="assets/logos/common-thread-collective.svg" alt="Common Thread Collective" loading="lazy" />
-          </div>
-          <div class="logo-tile" title="Originality.ai — AI content detection">
-            <img src="assets/logos/originality-ai.svg" alt="Originality.ai" loading="lazy" />
-          </div>
-          <div class="logo-tile" title="The Wharton School, University of Pennsylvania">
-            <img src="https://www.wharton.upenn.edu/wp-content/plugins/martech-chupacabra/includes/images/Wharton-Logo-RGB.png"
-                 alt="The Wharton School" loading="lazy"
-                 onerror="this.onerror=null;this.src='assets/logos/wharton.svg';" />
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ===================== TESTIMONIALS ===================== -->
-    <section class="section section-soft" id="testimonials">
+    <section class="section" id="testimonials">
       <div class="container">
         <div class="section-head reveal">
           <span class="kicker">Testimonials</span>
@@ -228,7 +244,7 @@
     </section>
 
     <!-- ===================== CONTACT ===================== -->
-    <section class="section contact" id="contact">
+    <section class="section section-soft contact" id="contact">
       <div class="container reveal">
         <span class="kicker accent" style="font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:14px;">Get in touch</span>
         <h2 style="margin-top:10px;">Have a data problem? Let's talk.</h2>
