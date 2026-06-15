@@ -64,6 +64,7 @@
         <a href="#work">Experience</a>
         <a href="#about">About</a>
         <a href="#services">What I Do</a>
+        <a href="#case-studies">Case Studies</a>
         <a href="#testimonials">Testimonials</a>
         <a href="#contact" class="btn btn-primary">Get in touch</a>
       </nav>
@@ -234,8 +235,39 @@
       </div>
     </section>
 
+    <!-- ===================== CASE STUDIES ===================== -->
+    <!--
+      Teaser cards for in-depth project write-ups. Each card links to its own
+      detail page under case-studies/. Add more <a class="case-card"> blocks as
+      new write-ups are published — the grid flows to two columns on wide screens.
+    -->
+    <section class="section" id="case-studies">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">Case studies</span>
+          <h2>Selected work, in depth.</h2>
+          <p>A closer look at how I approach hard problems — the constraints, the design decisions that mattered, and the results they produced.</p>
+        </div>
+        <div class="case-grid">
+          <a class="case-card reveal" href="case-studies/cgm-low-glucose-correction.html">
+            <span class="case-tag">Medical-device ML · Continuous glucose monitoring</span>
+            <h3>Reducing Low-Glucose Error in a CGM Algorithm</h3>
+            <p>A guardrailed machine-learning correction layer that lowers error in the safety-critical hypoglycemic range — without regressing a single clinical dataset.</p>
+            <ul class="case-highlights">
+              <li>Learned error model wrapped in a deterministic, fail-open guardrail layer</li>
+              <li>Leave-one-study-out validation with a strict per-dataset no-regression bar</li>
+              <li>Shipped to a real-time inference path with a staged production rollout</li>
+            </ul>
+            <span class="case-link">Read the case study
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== TESTIMONIALS ===================== -->
-    <section class="section" id="testimonials">
+    <section class="section section-soft" id="testimonials">
       <div class="container">
         <div class="section-head reveal">
           <span class="kicker">Testimonials</span>
@@ -281,7 +313,7 @@
     </section>
 
     <!-- ===================== CONTACT ===================== -->
-    <section class="section section-soft contact" id="contact">
+    <section class="section contact" id="contact">
       <div class="container reveal">
         <span class="kicker accent" style="font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:14px;">Get in touch</span>
         <h2 style="margin-top:10px;">Have a data problem? Let's talk.</h2>
