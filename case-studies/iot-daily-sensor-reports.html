@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automating Daily Reports from IoT Care Sensors</title>
+  <meta name="description" content="Case study: an automated daily reporting pipeline for a fleet of IoT care sensors, querying a cloud time-series database and delivering a self-contained interactive report that care teams and operations staff read every morning." />
+  <meta name="keywords" content="IoT analytics, sensor data, automated reporting, AWS Timestream, time-series data, senior living technology, connected devices, Python, Plotly, Nasser Chams" />
+  <meta name="author" content="Nasser Chams" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nchams.github.io/case-studies/iot-daily-sensor-reports.html" />
+
+  <!-- Open Graph (link previews) -->
+  <meta property="og:title" content="Automating Daily Reports from IoT Care Sensors" />
+  <meta property="og:description" content="From raw cloud sensor streams to a self-contained interactive report in the inbox every morning: events by room, staff response times, device health, and full sensor traces." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nchams.github.io/case-studies/iot-daily-sensor-reports.html" />
+  <meta property="og:site_name" content="Applied Data Science & Analytics Consulting" />
+  <meta property="og:locale" content="en_CA" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Automating Daily Reports from IoT Care Sensors" />
+  <meta name="twitter:description" content="Automated daily reporting for a fleet of IoT care sensors: events, response times, device health, and interactive traces in one self-contained HTML file." />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Automating Daily Reports from IoT Care Sensors",
+    "description": "An automated daily reporting pipeline for a fleet of IoT care sensors: cloud time-series queries, per-community timezones, per-device thresholds, and a self-contained interactive HTML report.",
+    "url": "https://nchams.github.io/case-studies/iot-daily-sensor-reports.html",
+    "author": { "@type": "Person", "name": "Nasser Chams", "url": "https://nchams.github.io/" },
+    "about": ["IoT analytics", "Automated reporting", "Time-series data"],
+    "keywords": "IoT, sensor data, AWS Timestream, automated reporting, Plotly, Python"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50' y='68' font-size='56' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>N</text></svg>" />
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="brand">Applied&nbsp;Data&nbsp;Science<span class="dot">.</span></a>
+      <nav class="nav-links" id="navLinks">
+        <a href="../index.html#work">Experience</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#services">What We Do</a>
+        <a href="../index.html#case-studies">Case Studies</a>
+        <a href="../index.html#contact" class="btn btn-primary">Get in touch</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== ARTICLE HERO ===================== -->
+    <section class="cs-hero">
+      <div class="container">
+        <a href="../index.html#case-studies" class="cs-back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          All case studies
+        </a>
+        <span class="case-tag">IoT analytics · Connected care devices</span>
+        <h1>Automating Daily Reports from IoT Care Sensors</h1>
+        <p class="cs-sub">From raw cloud sensor streams to a report care teams actually read every morning.</p>
+        <dl class="cs-meta">
+          <div>
+            <dt>Role</dt>
+            <dd>Data engineering &amp; reporting automation, end to end</dd>
+          </div>
+          <div>
+            <dt>Domain</dt>
+            <dd>IoT health-monitoring sensors deployed across senior-living communities</dd>
+          </div>
+          <div>
+            <dt>Stack</dt>
+            <dd>Python, AWS Timestream (boto3), pandas/NumPy, Plotly, self-contained HTML reporting</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===================== ARTICLE BODY ===================== -->
+    <article class="section" style="padding-top: 20px;">
+      <div class="container">
+        <div class="case-prose">
+
+          <h2>The problem</h2>
+          <p class="case-lede">A health-technology company deploys IoT sensors in senior-living communities to detect incontinence events, so caregivers respond in minutes instead of hours. The sensors stream constantly to a cloud time-series database. The data was all there. The visibility wasn't.</p>
+          <p>Care directors and operations staff needed to know, every morning: <strong>what happened overnight, room by room? How quickly did staff respond? And which devices need attention?</strong> Getting those answers meant someone technical digging through dashboards and raw queries, which doesn't scale across multiple operators, communities, and time zones.</p>
+          <p>The brief: turn the raw streams into <strong>an automated daily report that a non-technical care team can open and act on</strong>, with no logins, no dashboards, and no training.</p>
+
+          <h2>The pipeline</h2>
+          <p>We built a report engine in Python that runs against AWS Timestream, the platform's time-series database, and handles the messy realities of a real device fleet:</p>
+          <ul>
+            <li><strong>Per-community time zones</strong>: each community's "day" runs 9:00 AM to 8:59 AM local time. The engine resolves every community's timezone from org metadata and converts each reporting window to UTC correctly, including daylight-saving transitions.</li>
+            <li><strong>Per-device thresholds</strong>: every sensor has its own calibrated alert threshold pulled from device metadata, with a safe fallback when one is missing, so charts and event logic reflect what each device actually does.</li>
+            <li><strong>Efficient queries at fleet scale</strong>: full-day sensor traces are downsampled server-side into 10-second bins inside the SQL query, so the report stays fast and light even with a full day of high-frequency data per room.</li>
+            <li><strong>Resilient cloud plumbing</strong>: endpoint discovery, retry policies, and paginated result parsing so a transient AWS hiccup doesn't kill the morning report.</li>
+          </ul>
+
+          <h2>What the report contains</h2>
+          <p>One HTML file per operator, with a dropdown to switch between communities. Each community section gives staff the full picture:</p>
+          <ul>
+            <li><strong>Summary KPIs</strong> for the reporting window;</li>
+            <li><strong>Incontinence events by room</strong>, so patterns and high-need residents stand out;</li>
+            <li><strong>Event response times</strong>, the accountability metric: how long between the sensor alert and the caregiver's response;</li>
+            <li><strong>Operational issues</strong>: rooms offline (detected two ways, from uptime rollups and from the latest device service status), plus suspect pads and modules flagged from tagged annotations;</li>
+            <li><strong>Full-window interactive sensor traces</strong> for every room, with each device's own threshold drawn on the chart and detected events shaded directly on the trace, so anyone can see exactly what the sensor saw.</li>
+          </ul>
+          <p>The whole report is <strong>a single self-contained HTML file</strong>: logo embedded, styling inlined, charts interactive. It opens in any browser from an email attachment. No server, no accounts, no IT involvement at the care community.</p>
+
+          <h2>Built to scale across operators</h2>
+          <p>Everything specific to a customer lives in a small configuration block: the operator's name, their list of communities, and the reporting window. The same engine produces branded daily reports for multiple senior-living operators, from a single-community deployment to operators with five or more communities in different time zones. Onboarding a new operator is a config change, not a new codebase.</p>
+
+          <h2>What this project demonstrates</h2>
+          <ul>
+            <li><strong>Cloud time-series engineering</strong>: efficient, resilient querying of AWS Timestream across a live device fleet, with server-side downsampling to keep reports fast.</li>
+            <li><strong>Reporting people actually use</strong>: a self-contained, interactive report designed for non-technical care staff, not a dashboard that assumes an analyst.</li>
+            <li><strong>Operational awareness built in</strong>: device health and data quality (offline rooms, suspect hardware) reported alongside the care metrics, because a silent sensor is a care risk.</li>
+            <li><strong>Multi-tenant thinking</strong>: per-community time zones, per-device thresholds, and config-driven branding so one engine serves many customers.</li>
+          </ul>
+
+        </div>
+
+        <!-- ===================== CTA ===================== -->
+        <div class="cs-cta">
+          <h2>Have a problem like this?</h2>
+          <p>We turn always-on sensor streams into reports and alerts your team can act on every day.</p>
+          <a href="../index.html#contact" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Get in touch
+          </a>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Applied Data Science. All rights reserved.</span>
+      <span>Built with care · Hosted on GitHub Pages</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+  </script>
+</body>
+</html>
